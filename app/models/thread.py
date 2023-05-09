@@ -22,7 +22,7 @@ class ThreadTable(Base):
     description: Mapped[str | None] = mapped_column(String(2048))
     image_url: Mapped[str| None] = mapped_column(String(256))
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    updated_at: Mapped[datetime | None] = mapped_column(onupdate=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(onupdate=datetime.utcnow)
     
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     
@@ -31,6 +31,7 @@ class ThreadTable(Base):
 
 
 class ThreadBase(BaseModel):
+    title: str = Field(max_length=256)
     description: str  = Field(max_lenght=2048)
     image_url: str = Field(max_lenght=256)
 
@@ -38,7 +39,7 @@ class ThreadBase(BaseModel):
 class ThreadRead(ThreadBase):
     id: int = Field(primary_key=True)
     created_at: datetime
-    updated_at: datetime
+    updated_at: datetime | None
 
     created_by: 'UserRead'
 
@@ -47,11 +48,13 @@ class ThreadRead(ThreadBase):
 
 
 class ThreadCreate(ThreadBase):
-    created_by: int
+    user_id: int = Field(gt=0)
 
 
 class ThreadUpdate(ThreadBase):
-    pass
+    title: str | None = Field(max_length=256)
+    description: str | None  = Field(max_lenght=2048)
+    image_url: str | None = Field(max_lenght=256)
 
 
 class ThreadReadWithMessages(ThreadRead):

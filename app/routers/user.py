@@ -28,10 +28,10 @@ async def get_user_by_id(id: int, session: AsyncSession = Depends(get_session)) 
 
 @router.post('/', response_model=UserRead)
 async def create_user(user: UserCreate, session: AsyncSession = Depends(get_session)) -> UserTable:
+    if await UserCrud(session).get_user_by_email(user.email):
+        raise HTTPException(403, 'Email is busy.')
     if await UserCrud(session).get_user_by_username(user.username):
         raise HTTPException(403, 'Username is busy.')
-    if await UserCrud(session).get_user_by_email(user.username):
-        raise HTTPException(403, 'Email is busy.')
     result = await UserCrud(session).create_user(user)
     if not result: raise HTTPException(404, 'User not found.')
     return result
