@@ -2,7 +2,7 @@
 /.vscode
 .mypy_cache
 app/music_app.db
-app/.env
+.env
 venv/
 app/app.db
 **/app.db
