@@ -5,7 +5,7 @@ from sqlalchemy import String, ForeignKey
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from database.database import Base
+from ..database.database import Base
 
 
 if TYPE_CHECKING:

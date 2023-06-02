@@ -1,14 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.database import get_session
 
-from models.user import *
-from crud.user import UserCrud
+from ..database.database import get_session
+from ..models.user import *
+from ..crud.user import UserCrud
+
 
 router = APIRouter(
     prefix='/user',
     tags=['User']
 )
+
 
 @router.get('/@{username}', response_model=UserRead)
 async def get_user_by_username(username: str, session: AsyncSession = Depends(get_session)) -> UserTable:

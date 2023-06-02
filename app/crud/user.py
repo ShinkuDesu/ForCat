@@ -1,9 +1,9 @@
 from sqlalchemy import select, insert, delete
 from sqlalchemy.orm import selectinload, joinedload
 
-from crud.base import CrudBase
-from models.user import *
-from security import user_auth
+from ..crud.base import CrudBase
+from ..models.user import *
+from ..security import user_auth
 
 
 class UserCrud(CrudBase):

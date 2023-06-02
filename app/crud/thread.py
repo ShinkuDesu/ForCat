@@ -1,10 +1,10 @@
 from sqlalchemy import select, update, delete, Result, insert
 from sqlalchemy.orm import selectinload, joinedload
 
-from crud.base import CrudBase
-from models.message import *
-from models.thread import *
-from models.user import *
+from ..crud.base import CrudBase
+from ..models.message import *
+from ..models.thread import *
+from ..models.user import *
 
 
 class ThreadCrud(CrudBase):

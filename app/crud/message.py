@@ -1,9 +1,9 @@
 from sqlalchemy import select, update, delete, Result, insert
 from sqlalchemy.orm import selectinload, joinedload
 
-from crud.base import CrudBase
-from models.message import *
-from models.thread import *
+from ..crud.base import CrudBase
+from ..models.message import *
+from ..models.thread import *
 
 
 class MessageCrud(CrudBase):
@@ -24,7 +24,7 @@ class MessageCrud(CrudBase):
         await self._session.commit()
         await self._session.refresh(result)
         return result
-
+  
     async def update_message(self, id_: int, data: MessageUpdate) -> MessageTable:
         result = await self._session.scalar(
             update(MessageTable)

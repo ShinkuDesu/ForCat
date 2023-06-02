@@ -11,9 +11,9 @@ from passlib.context import CryptContext
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from crud.user import *
-from database.database import get_session
-from config import SECRET_KEY, ALGORITHM
+from ..crud.user import *
+from ..database.database import get_session
+from ..config import SECRET_KEY, ALGORITHM
 
 router = APIRouter()
 

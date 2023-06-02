@@ -2,7 +2,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
 
-from config import DB_URL
+from ..config import DB_URL
 
 
 class Base(DeclarativeBase):

@@ -1,7 +1,7 @@
 import uvicorn
 
 from fastapi import FastAPI
-from routers import message, user, thread
+from .routers import message, user, thread
 
 
 app = FastAPI()

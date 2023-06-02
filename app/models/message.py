@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from typing import TYPE_CHECKING
 from datetime import datetime
 
-from database.database import Base
+from ..database.database import Base
 
 
 if TYPE_CHECKING:
