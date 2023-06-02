@@ -8,7 +8,11 @@ from models.thread import *
 
 class MessageCrud(CrudBase):
     async def get_mesage_by_id(self, id_: int) -> MessageTable | None:
-        return await self._session.get(MessageTable, id_)
+        return await self._session.scalar(
+                select(MessageTable)
+                .where(MessageTable.id == id_)
+                .options(joinedload(MessageTable.sent_by))
+            )
 
     async def create_message(self, data: MessageCreate) -> MessageTable:
         result = await self._session.scalar(
