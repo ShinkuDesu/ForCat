@@ -9,10 +9,10 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 
 from config import DB_URL
-from ..database.database import Base
-from ..models.user import UserTable
-from ..models.thread import ThreadTable
-from ..models.message import MessageTable
+from api.database.database import Base
+from api.models.user import UserTable
+from api.models.thread import ThreadTable
+from api.models.message import MessageTable
 
 
 # this is the Alembic Config object, which provides
