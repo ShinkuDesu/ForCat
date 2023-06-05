@@ -19,10 +19,10 @@ class ThreadTable(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     
     title: Mapped[str] = mapped_column(String(256))
-    description: Mapped[str | None] = mapped_column(String(2048))
-    image_url: Mapped[str| None] = mapped_column(String(256))
+    description: Mapped[str | None] = mapped_column(String(2048), nullable=True)
+    image_url: Mapped[str| None] = mapped_column(String(256), nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(onupdate=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)
     
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     
@@ -33,7 +33,7 @@ class ThreadTable(Base):
 class ThreadBase(BaseModel):
     title: str = Field(max_length=256)
     description: str  = Field(max_lenght=2048)
-    image_url: str = Field(max_lenght=256)
+    image_url: str | None = Field(max_lenght=256)
 
 
 class ThreadRead(ThreadBase):
@@ -61,7 +61,9 @@ class ThreadReadWithMessages(ThreadRead):
     messages: list['MessageRead']
 
 
+
 from .message import MessageRead
 from .user import UserRead
 
 ThreadRead.update_forward_refs()
+ThreadReadWithMessages.update_forward_refs()

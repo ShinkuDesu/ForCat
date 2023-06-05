@@ -9,10 +9,10 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 
 from config import DB_URL
-from database.database import Base
-from models.user import UserTable
-from models.thread import ThreadTable
-from models.message import MessageTable
+from ..database.database import Base
+from ..models.user import UserTable
+from ..models.thread import ThreadTable
+from ..models.message import MessageTable
 
 
 # this is the Alembic Config object, which provides
@@ -63,7 +63,7 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(connection=connection, target_metadata=target_metadata, render_as_batch=True,)
 
     with context.begin_transaction():
         context.run_migrations()

@@ -5,6 +5,7 @@ from ..crud.base import CrudBase
 from ..models.message import *
 from ..models.thread import *
 from ..models.user import *
+from config import *
 
 
 class ThreadCrud(CrudBase):
@@ -13,6 +14,22 @@ class ThreadCrud(CrudBase):
             select(ThreadTable)
             .where(ThreadTable.id == id_)
             .options(joinedload(ThreadTable.created_by))
+        )
+    
+    async def get_thread_by_id_with_messages(
+        self,
+        id_: int,
+        offset: int = 0,
+        limit: int = THREAD_MESSAGE_STANDART_LIMIT,
+    ) -> ThreadTable | None:
+        return await self._session.scalar(
+            select(ThreadTable, MessageTable)
+            .where(ThreadTable.id == id_)
+            .options(joinedload(ThreadTable.messages))
+            .options(joinedload(ThreadTable.created_by))
+            .options(joinedload(MessageTable.sent_by))
+            .limit(limit)
+            .offset(offset)
         )
     
     async def create_thread(self, data: ThreadCreate) -> ThreadTable:

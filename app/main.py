@@ -1,15 +1,23 @@
 import uvicorn
 
-from fastapi import FastAPI
-from .routers import message, user, thread
+from fastapi import FastAPI, APIRouter
+from api.routers import message, user, thread
 
 
 app = FastAPI()
 
+api_router = APIRouter(
+    prefix='/api',
+    tags=['API']
+)
 
-app.include_router(message.router)
-app.include_router(user.router)
-app.include_router(thread.router)
+
+api_router.include_router(message.router)
+api_router.include_router(user.router)
+api_router.include_router(thread.router)
+
+
+app.include_router(api_router)
 
 
 @app.on_event("startup")

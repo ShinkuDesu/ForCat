@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm.exc import UnmappedInstanceError
-from ..database.database import get_session
 
+from ..database.database import get_session
 from ..crud.message import MessageCrud
 from ..models.message import *
 from ..models.thread import *

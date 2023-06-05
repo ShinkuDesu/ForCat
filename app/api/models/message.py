@@ -19,7 +19,7 @@ class MessageTable(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     text: Mapped[str] = mapped_column(String(2048))
-    image_url: Mapped[str | None] = mapped_column(String(256))
+    image_url: Mapped[str | None] = mapped_column(String(256), nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -32,7 +32,7 @@ class MessageTable(Base):
 
 class MessageBase(BaseModel):
     text: str = Field(max_length=2048)
-    image_url: str = Field(max_length=256)
+    image_url: str | None = Field(max_length=256)
 
 
 class MessageRead(MessageBase):
@@ -51,10 +51,6 @@ class MessageRead(MessageBase):
 class MessageCreate(MessageBase):
     user_id: int = Field(gt=0)
     thread_id: int = Field(gt=0)
-
-
-class MessageReadWithThread(MessageRead):
-    thread: 'ThreadRead'
 
 
 class MessageUpdate(MessageBase):

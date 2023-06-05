@@ -7,7 +7,7 @@ from ..crud.message import MessageCrud
 from ..crud.thread import ThreadCrud
 from ..models.message import *
 from ..models.thread import *
-
+from config import *
 
 router = APIRouter(
     prefix='/thread',
@@ -17,6 +17,14 @@ router = APIRouter(
 @router.get('/{thread_id}', response_model=ThreadRead)
 async def get_thread_by_id(thread_id: int, session: AsyncSession = Depends(get_session)) -> ThreadTable:
     result = await ThreadCrud(session).get_thread_by_id(thread_id)
+    if not result:
+        raise HTTPException(404, 'Thread not found.')
+    return result
+
+
+@router.get('/messages/{thread_id}', response_model=ThreadReadWithMessages)
+async def get_thread_with_messages(thread_id: int, offset: int = 0, limit: int = THREAD_MESSAGE_STANDART_LIMIT, session: AsyncSession = Depends(get_session)) -> ThreadTable:
+    result = await ThreadCrud(session).get_thread_by_id_with_messages(thread_id, offset, limit)
     if not result:
         raise HTTPException(404, 'Thread not found.')
     return result

@@ -19,7 +19,7 @@ class UserTable(Base):
     username: Mapped[str] = mapped_column(String(64))
     email: Mapped[str] = mapped_column(String(128))
     hashed_password: Mapped[str] = mapped_column()
-    image_url: Mapped[str] = mapped_column(String(256))
+    image_url: Mapped[str | None] = mapped_column(String(256), nullable=True)
     is_active: Mapped[bool] = mapped_column(default=False)
 
     threads: Mapped[list['ThreadTable']] = relationship(back_populates='created_by')
@@ -29,13 +29,14 @@ class UserTable(Base):
 class UserBase(BaseModel):
     username: str = Field(max_length=64)
     email: str = Field(max_length=128)
-    image_url: str = Field(max_length=256)
 
 
 class UserRead(UserBase):
     id: int
     hashed_password: str
     is_active: bool
+    image_url: str | None = None
+
 
     class Config:
         orm_mode = True
@@ -48,3 +49,5 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     username: str
     email: str
+    image_url: str | None = Field(max_length=256)
+
